@@ -17,16 +17,24 @@
 
 .add {
   margin-top: 10px;
-  width: 229px;
+  width: 245px;
 }
 
 .todo-items {
   height: 70vh;
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .item {
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
   width: 25%;
   height: 50%;
+}
+
+.delete {
+  margin: auto;
 }
