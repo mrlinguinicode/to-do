@@ -12,7 +12,7 @@ function App() {
       </div>
 
       <div className="todo-input">
-        <TextField placeholder="Enter task" multiline />
+        <TextField maxRows={4} placeholder="Enter task" multiline />
         <div className="add">
           <Button className="add" variant="contained" size="large">
             Add
