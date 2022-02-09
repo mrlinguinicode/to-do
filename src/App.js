@@ -22,7 +22,7 @@ function App() {
 
       <div className="todo-items">
         <div className="item">
-          <p>hello</p>
+          <p className="text">hello</p>
           <div className="delete">
             <Button variant="contained" color="success">
               Completed
@@ -67,6 +67,72 @@ function App() {
         </div>
         <div className="item">
           <p>hello</p>
+          <div className="delete">
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+            <Button variant="contained" color="error">
+              Delete
+            </Button>
+          </div>
+        </div>
+        <div className="item">
+          <p>waddup</p>
+          <div className="delete">
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+            <Button variant="contained" color="error">
+              Delete
+            </Button>
+          </div>
+        </div>
+        <div className="item">
+          <p>waddup</p>
+          <div className="delete">
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+            <Button variant="contained" color="error">
+              Delete
+            </Button>
+          </div>
+        </div>
+        <div className="item">
+          <p>waddup</p>
+          <div className="delete">
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+            <Button variant="contained" color="error">
+              Delete
+            </Button>
+          </div>
+        </div>
+        <div className="item">
+          <p>waddup</p>
+          <div className="delete">
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+            <Button variant="contained" color="error">
+              Delete
+            </Button>
+          </div>
+        </div>
+        <div className="item">
+          <p>waddup</p>
+          <div className="delete">
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+            <Button variant="contained" color="error">
+              Delete
+            </Button>
+          </div>
+        </div>
+        <div className="item">
+          <p>waddup</p>
           <div className="delete">
             <Button variant="contained" color="success">
               Completed
