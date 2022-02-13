@@ -60,3 +60,12 @@ input {
   height: 10%;
   margin: 5px;
 }
+
+@media (max-width: 800px) {
+  .todo-items {
+    height: 70vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
