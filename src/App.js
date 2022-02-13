@@ -51,9 +51,11 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3030/api/get").then((response) => {
-      setData(response.data);
-    });
+    Axios.get("http://cf42-2601-4c0-4180-3460-00-ff0a.ngrok.io/api/get").then(
+      (response) => {
+        setData(response.data);
+      }
+    );
   }, [reset]);
 
   if (data.length !== 0) {
