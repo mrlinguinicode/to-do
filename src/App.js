@@ -12,6 +12,17 @@ function App() {
   const [data, setData] = useState([]);
   const [todoItem, setTodoItem] = useState("");
   const [reset, setReset] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [update, setUpdate] = useState("");
+
+  const updateTask = (oldtask, newtask) => {
+    Axios.put("http://localhost:3030/api/update", {
+      oldtask: oldtask,
+      newtask: newtask,
+    }).then(() => {
+      setReset(!reset);
+    });
+  };
 
   const deleteTask = (props) => {
     //when using axios.delete must have "data:" for it to send the body content to server
@@ -79,10 +90,29 @@ function App() {
             const task = item.task;
             return (
               <div key={index} className="item">
-                <p className="text">{task}</p>
+                {edit ? (
+                  <TextField
+                    className="edit-text"
+                    multiline
+                    rows={5}
+                    disabled={false}
+                    defaultValue={task}
+                  />
+                ) : (
+                  <p className="text">{task}</p>
+                )}
+                <input onChange={(e) => setUpdate(e.target.value)}></input>
+                <button onClick={() => updateTask(task, update)}>edit</button>
                 <div className="delete">
-                  <Button variant="contained" color="success">
-                    Completed
+                  <Button
+                    onClick={() => {
+                      console.log(index);
+                      setEdit(!edit);
+                    }}
+                    variant="contained"
+                    color="success"
+                  >
+                    Mark as Complete
                   </Button>
                   <Button
                     onClick={() => {

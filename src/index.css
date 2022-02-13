@@ -38,10 +38,25 @@
 
 .delete {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   margin-top: auto;
+  height: 35%;
 }
 
 .text {
-  height: 70%;
+  height: 10%;
+}
+
+.text {
+  margin: auto;
+}
+
+.edit-text {
+  height: 100%;
+}
+
+input {
+  height: 10%;
+  margin: 5px;
 }
