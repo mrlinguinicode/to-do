@@ -51,7 +51,7 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("http://cf42-2601-4c0-4180-3460-00-ff0a.ngrok.io/api/get").then(
+    Axios.get("https://cf42-2601-4c0-4180-3460-00-ff0a.ngrok.io/api/get").then(
       (response) => {
         setData(response.data);
       }
