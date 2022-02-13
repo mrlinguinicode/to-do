@@ -1,6 +1,15 @@
 .container {
 }
 
+@media only screen and (max-width: 800px) {
+  .todo-items {
+    height: 70vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
 .title {
   display: flex;
   justify-content: center;
@@ -59,13 +68,4 @@
 input {
   height: 10%;
   margin: 5px;
-}
-
-@media (max-width: 800px) {
-  .todo-items {
-    height: 70vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }
