@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Switch from "@mui/material/Switch";
 
 //need to fix adjustable height of page
 
@@ -15,8 +12,17 @@ function App() {
   const [edit, setEdit] = useState(false);
   const [update, setUpdate] = useState("");
 
+  const deleteAll = () => {
+    Axios.delete(
+      "https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/deleteall",
+      {
+        data: { empty: null },
+      }
+    ).then(() => setReset(!reset));
+  };
+
   const updateTask = (oldtask, newtask) => {
-    Axios.put("http://localhost:3030/api/update", {
+    Axios.put("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/update", {
       oldtask: oldtask,
       newtask: newtask,
     }).then(() => {
@@ -26,7 +32,7 @@ function App() {
 
   const deleteTask = (props) => {
     //when using axios.delete must have "data:" for it to send the body content to server
-    Axios.delete("http://localhost:3030/api/delete", {
+    Axios.delete("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/delete", {
       data: { task: props },
     }).then(() => {
       setReset(!reset);
@@ -35,7 +41,7 @@ function App() {
 
   const submitTodo = () => {
     if (todoItem) {
-      Axios.post("http://localhost:3030/api/insert", {
+      Axios.post("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/insert", {
         todoItem: todoItem,
       })
         .then(() => {
@@ -51,7 +57,7 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("https://cf42-2601-4c0-4180-3460-00-ff0a.ngrok.io/api/get").then(
+    Axios.get("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/get").then(
       (response) => {
         setData(response.data);
       }
@@ -61,8 +67,21 @@ function App() {
   if (data.length !== 0) {
     return (
       <div>
-        <div className="title">
-          <h1>TODO LIST</h1>
+        <div className="title-container">
+          <div className="title">
+            <h1>TODO LIST</h1>
+          </div>
+        </div>
+
+        <div className="remove-all">
+          <Button
+            onClick={() => deleteAll()}
+            variant="contained"
+            size="medium"
+            color="error"
+          >
+            Remove All Tasks
+          </Button>
         </div>
 
         <div className="todo-input">
@@ -135,8 +154,10 @@ function App() {
   } else {
     return (
       <div>
-        <div className="title">
-          <h1>TODO LIST</h1>
+        <div className="title-container">
+          <div className="title">
+            <h1>TODO LIST</h1>
+          </div>
         </div>
 
         <div className="todo-input">
