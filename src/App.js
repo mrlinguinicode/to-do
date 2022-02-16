@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import TaskTable from "./Table/Tasktable";
+import TableEdit from "./Table/TableEdit";
 
 //need to fix adjustable height of page
 
@@ -13,16 +15,13 @@ function App() {
   const [update, setUpdate] = useState("");
 
   const deleteAll = () => {
-    Axios.delete(
-      "https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/deleteall",
-      {
-        data: { empty: null },
-      }
-    ).then(() => setReset(!reset));
+    Axios.delete("http://localhost:3030/api/deleteall", {
+      data: { empty: null },
+    }).then(() => setReset(!reset));
   };
 
   const updateTask = (oldtask, newtask) => {
-    Axios.put("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/update", {
+    Axios.put("http://localhost:3030/api/update", {
       oldtask: oldtask,
       newtask: newtask,
     }).then(() => {
@@ -32,7 +31,7 @@ function App() {
 
   const deleteTask = (props) => {
     //when using axios.delete must have "data:" for it to send the body content to server
-    Axios.delete("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/delete", {
+    Axios.delete("http://localhost:3030/api/delete", {
       data: { task: props },
     }).then(() => {
       setReset(!reset);
@@ -41,7 +40,7 @@ function App() {
 
   const submitTodo = () => {
     if (todoItem) {
-      Axios.post("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/insert", {
+      Axios.post("http://localhost:3030/api/insert", {
         todoItem: todoItem,
       })
         .then(() => {
@@ -57,11 +56,9 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("https://34b2-2601-4c0-4180-3460-00-ca8.ngrok.io/api/get").then(
-      (response) => {
-        setData(response.data);
-      }
-    );
+    Axios.get("http://localhost:3030/api/get").then((response) => {
+      setData(response.data);
+    });
   }, [reset]);
 
   if (data.length !== 0) {
@@ -105,8 +102,12 @@ function App() {
             </Button>
           </div>
         </div>
+        <div>
+          <TaskTable data={data} />
+        </div>
+        <TableEdit />
 
-        <div className="todo-items">
+        {/* <div className="todo-items">
           {data.map((item, index) => {
             const task = item.task;
             return (
@@ -148,7 +149,7 @@ function App() {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     );
   } else {
