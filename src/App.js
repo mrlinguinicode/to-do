@@ -24,7 +24,7 @@ function App() {
   const [status, setStatus] = useState("incomplete");
 
   const markComplete = (item) => {
-    Axios.put("http://localhost:3030/api/update", {
+    Axios.put("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
       id: item.id,
       completed: 1,
     }).then(() => {
@@ -33,7 +33,7 @@ function App() {
   };
 
   const undoComplete = (item) => {
-    Axios.put("http://localhost:3030/api/update", {
+    Axios.put("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
       id: item.id,
       completed: 0,
     }).then(() => {
@@ -48,15 +48,18 @@ function App() {
   };
 
   const deleteAll = () => {
-    Axios.delete("http://localhost:3030/api/deleteall", {
-      data: { empty: null },
-    }).then(() => {
+    Axios.delete(
+      "https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/deleteall",
+      {
+        data: { empty: null },
+      }
+    ).then(() => {
       setReset(!reset);
     });
   };
 
   const updateTask = (item, newTask) => {
-    Axios.put("http://localhost:3030/api/update", {
+    Axios.put("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
       id: item.id,
       task: newTask,
     }).then(() => {
@@ -67,18 +70,24 @@ function App() {
 
   const deleteTask = (item) => {
     //when using axios.delete must have "data:" for it to send the body content to server
-    Axios.delete("http://localhost:3030/api/delete", {
-      data: { id: item.id },
-    }).then(() => {
+    Axios.delete(
+      "https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/delete",
+      {
+        data: { id: item.id },
+      }
+    ).then(() => {
       setReset(!reset);
     });
   };
 
   const submitTodo = () => {
     if (todoItem) {
-      Axios.post("http://localhost:3030/api/insert", {
-        todoItem: todoItem,
-      })
+      Axios.post(
+        "https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/insert",
+        {
+          todoItem: todoItem,
+        }
+      )
         .then(() => {
           setReset(!reset);
           setTodoItem("");
@@ -92,10 +101,12 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:3030/api/get").then((response) => {
-      setData(response.data);
-      console.log(response.data);
-    });
+    Axios.get("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/get").then(
+      (response) => {
+        setData(response.data);
+        console.log(response.data);
+      }
+    );
   }, [reset]);
 
   if (data.length !== 0) {
