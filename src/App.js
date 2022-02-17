@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import TaskTable from "./Table/Tasktable";
+import TaskTable from "./Table/TaskTable";
 import TableEdit from "./Table/TableEdit";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import CompletedTable from "./Table/CompletedTable";
 
 //need to fix adjustable height of page
 
@@ -11,28 +19,56 @@ function App() {
   const [data, setData] = useState([]);
   const [todoItem, setTodoItem] = useState("");
   const [reset, setReset] = useState(true);
-  const [edit, setEdit] = useState(false);
+  const [editId, setEditId] = useState(null);
   const [update, setUpdate] = useState("");
+  const [status, setStatus] = useState("incomplete");
 
-  const deleteAll = () => {
-    Axios.delete("http://localhost:3030/api/deleteall", {
-      data: { empty: null },
-    }).then(() => setReset(!reset));
-  };
-
-  const updateTask = (oldtask, newtask) => {
+  const markComplete = (item) => {
     Axios.put("http://localhost:3030/api/update", {
-      oldtask: oldtask,
-      newtask: newtask,
+      id: item.id,
+      completed: 1,
     }).then(() => {
       setReset(!reset);
     });
   };
 
-  const deleteTask = (props) => {
+  const undoComplete = (item) => {
+    Axios.put("http://localhost:3030/api/update", {
+      id: item.id,
+      completed: 0,
+    }).then(() => {
+      setReset(!reset);
+    });
+  };
+
+  const handleEdit = (event, item) => {
+    event.preventDefault();
+    setEditId(item.id);
+    console.log(editId);
+  };
+
+  const deleteAll = () => {
+    Axios.delete("http://localhost:3030/api/deleteall", {
+      data: { empty: null },
+    }).then(() => {
+      setReset(!reset);
+    });
+  };
+
+  const updateTask = (item, newTask) => {
+    Axios.put("http://localhost:3030/api/update", {
+      id: item.id,
+      task: newTask,
+    }).then(() => {
+      setEditId(null);
+      setReset(!reset);
+    });
+  };
+
+  const deleteTask = (item) => {
     //when using axios.delete must have "data:" for it to send the body content to server
     Axios.delete("http://localhost:3030/api/delete", {
-      data: { task: props },
+      data: { id: item.id },
     }).then(() => {
       setReset(!reset);
     });
@@ -58,6 +94,7 @@ function App() {
   useEffect(() => {
     Axios.get("http://localhost:3030/api/get").then((response) => {
       setData(response.data);
+      console.log(response.data);
     });
   }, [reset]);
 
@@ -102,54 +139,57 @@ function App() {
             </Button>
           </div>
         </div>
-        <div>
-          <TaskTable data={data} />
+        <div className="status">
+          <button onClick={() => setStatus("inprogress")}>In-progress</button>
+          <button onClick={() => setStatus("complete")}>Complete</button>
         </div>
-        <TableEdit />
-
-        {/* <div className="todo-items">
-          {data.map((item, index) => {
-            const task = item.task;
-            return (
-              <div key={index} className="item">
-                {edit ? (
-                  <TextField
-                    className="edit-text"
-                    multiline
-                    rows={5}
-                    disabled={false}
-                    defaultValue={task}
-                  />
-                ) : (
-                  <p className="text">{task}</p>
-                )}
-                <input onChange={(e) => setUpdate(e.target.value)}></input>
-                <button onClick={() => updateTask(task, update)}>edit</button>
-                <div className="delete">
-                  <Button
-                    onClick={() => {
-                      console.log(index);
-                      setEdit(!edit);
-                    }}
-                    variant="contained"
-                    color="success"
-                  >
-                    Mark as Complete
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      deleteTask(task);
-                    }}
-                    variant="contained"
-                    color="error"
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </div>
-            );
-          })}
-        </div> */}
+        <div className="task-table">
+          <TableContainer component={Paper}>
+            <Table className="task-table">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="todo-cell">Todo</TableCell>
+                  <TableCell align="center">Options</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((item) => {
+                  if (status === "complete") {
+                    return (
+                      <>
+                        {item.completed ? (
+                          <CompletedTable
+                            item={item}
+                            undoComplete={undoComplete}
+                          />
+                        ) : null}
+                      </>
+                    );
+                  } else {
+                    if (!item.completed) {
+                      return (
+                        <>
+                          {editId !== item.id ? (
+                            <TaskTable
+                              item={item}
+                              handleEdit={handleEdit}
+                              deleteTask={deleteTask}
+                              markComplete={markComplete}
+                            />
+                          ) : (
+                            <TableEdit item={item} updateTask={updateTask} />
+                          )}
+                        </>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </div>
     );
   } else {
