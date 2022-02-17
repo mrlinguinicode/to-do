@@ -71,10 +71,7 @@ function App() {
   const deleteTask = (item) => {
     //when using axios.delete must have "data:" for it to send the body content to server
     Axios.delete(
-      "https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/delete",
-      {
-        data: { id: item.id },
-      }
+      `https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/delete/${item.id}`
     ).then(() => {
       setReset(!reset);
     });

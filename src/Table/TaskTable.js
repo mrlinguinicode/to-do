@@ -18,7 +18,15 @@ const TaskTable = ({ item, handleEdit, deleteTask, markComplete }) => {
         >
           delete
         </button>{" "}
-        / <button onClick={() => markComplete(item)}>complete</button>
+        /{" "}
+        <button
+          onClick={() => {
+            console.log(item);
+            markComplete(item);
+          }}
+        >
+          complete
+        </button>
       </TableCell>
     </TableRow>
   );
