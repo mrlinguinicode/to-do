@@ -9,7 +9,13 @@ const CompletedTable = ({ item, undoComplete }) => {
         {item.task}
       </TableCell>
       <TableCell align="center">
-        <button onClick={() => undoComplete(item)}>undo</button>
+        <button
+          onClick={() => {
+            undoComplete(item);
+          }}
+        >
+          undo
+        </button>
       </TableCell>
     </TableRow>
   );
