@@ -24,7 +24,7 @@ function App() {
   const [status, setStatus] = useState("incomplete");
 
   const markComplete = (item) => {
-    Axios.put("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
+    Axios.put("https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
       id: item.id,
       completed: 1,
     }).then(() => {
@@ -33,7 +33,7 @@ function App() {
   };
 
   const undoComplete = (item) => {
-    Axios.put("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
+    Axios.put("https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
       id: item.id,
       completed: 0,
     }).then(() => {
@@ -49,7 +49,7 @@ function App() {
 
   const deleteAll = () => {
     Axios.delete(
-      "https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/deleteall",
+      "https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/deleteall",
       {
         data: { empty: null },
       }
@@ -59,7 +59,7 @@ function App() {
   };
 
   const updateTask = (item, newTask) => {
-    Axios.put("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
+    Axios.put("https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/update", {
       id: item.id,
       task: newTask,
     }).then(() => {
@@ -71,7 +71,7 @@ function App() {
   const deleteTask = (item) => {
     //when using axios.delete must have "data:" for it to send the body content to server
     Axios.delete(
-      `https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/delete/${item.id}`
+      `https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/delete/${item.id}`
     ).then(() => {
       setReset(!reset);
     });
@@ -80,7 +80,7 @@ function App() {
   const submitTodo = () => {
     if (todoItem) {
       Axios.post(
-        "https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/insert",
+        "https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/insert",
         {
           todoItem: todoItem,
         }
@@ -98,7 +98,7 @@ function App() {
   };
 
   useEffect(() => {
-    Axios.get("https://01c2-2601-4c0-4180-3460-00-faa3.ngrok.io/api/get").then(
+    Axios.get("https://77b0-2601-4c0-4180-3460-00-faa3.ngrok.io/api/get").then(
       (response) => {
         setData(response.data);
         console.log(response.data);
